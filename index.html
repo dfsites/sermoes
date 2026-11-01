@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Semeando o Bem</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap">
+<style>
+/* Layout: uma coluna de leitura, barra fixa no topo com seções, timer e tamanho da letra */
+:root{
+  --bg:#f7f8f3; --surface:#ffffff; --ink:#1d2a22; --muted:#5d6b62;
+  --green:#1f6b45; --postit:#f3ec5a; --postit-ink:#2b2a12; --line:#dfe4dc;
+  --mark:#f6ef6b; --impact-bg:#e8f2ea;
+  --fs:20px;
+  --serif:"Literata", Georgia, "Times New Roman", serif;
+  --sans:"Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121814; --surface:#1a221d; --ink:#e7ece6; --muted:#9aa89f;
+  --green:#6fcf98; --postit:#d9d24a; --postit-ink:#1a1a08; --line:#2b362f;
+  --mark:#5c5718; --impact-bg:#1c2c22; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121814; --surface:#1a221d; --ink:#e7ece6; --muted:#9aa89f;
+  --green:#6fcf98; --postit:#d9d24a; --postit-ink:#1a1a08; --line:#2b362f;
+  --mark:#5c5718; --impact-bg:#1c2c22; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);
+  padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));padding-block:8px}
+.tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tools button{font-family:var(--sans);font-size:15px;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:8px;padding:6px 10px;min-height:36px;cursor:pointer}
+.tools button:focus-visible,.nav a:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.tools .on{background:var(--green);color:var(--bg);border-color:var(--green)}
+#timer{font-family:var(--sans);font-variant-numeric:tabular-nums;font-size:16px;font-weight:700;margin-left:auto;color:var(--green)}
+.nav{display:flex;gap:6px;overflow-x:auto;margin-top:8px;padding-bottom:2px;scrollbar-width:none}
+.nav a{flex:0 0 auto;font-family:var(--sans);font-size:14px;text-decoration:none;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:4px 12px}
+
+main{max-width:40rem;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:20px 80px}
+header.top{display:grid;gap:6px;margin-bottom:28px}
+.eyebrow{font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--sans);font-weight:800;font-size:1.7em;line-height:1.15;margin:0;text-wrap:balance}
+.base{font-size:.85em;color:var(--muted)}
+section{scroll-margin-top:110px;margin-top:44px}
+h2{font-family:var(--sans);font-weight:800;font-size:1.3em;line-height:1.2;margin:0 0 14px;color:var(--green);text-wrap:balance}
+h2 small{display:block;font-size:.55em;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:4px}
+p{margin:0 0 14px}
+ul{margin:0 0 14px;padding-left:1.1em}
+li{margin-bottom:8px}
+strong{font-weight:700}
+mark{background:var(--mark);color:inherit;padding:0 .15em;border-radius:3px;font-weight:600;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.verse{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 16px}
+.verse b{display:block;font-family:var(--sans);font-size:.7em;letter-spacing:.06em;text-transform:uppercase;color:var(--green);margin-bottom:4px}
+.verse i{font-style:italic}
+.impact{background:var(--impact-bg);border-radius:10px;padding:16px 16px 14px;margin:6px 0 18px;font-family:var(--sans);font-weight:800;font-size:1.22em;line-height:1.25;color:var(--green);text-wrap:balance}
+.impact::before{content:"FALE COM ÊNFASE";display:block;font-size:.5em;letter-spacing:.1em;font-weight:500;color:var(--muted);margin-bottom:6px}
+.postit{background:var(--postit);color:var(--postit-ink);padding:14px 16px;margin:0 0 16px;transform:rotate(-1deg);box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:var(--sans);font-weight:800;font-size:1.15em}
+.postit b{display:block;font-size:.55em;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;font-weight:500}
+.cue{font-family:var(--sans);font-size:.75em;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--postit-ink);background:var(--postit);padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:8px}
+.key{font-weight:700}
+.trio{list-style:none;padding:0;display:grid;gap:10px}
+.trio li{margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.summary{display:grid;gap:8px;margin:0 0 16px}
+.summary div{display:grid;grid-template-columns:7.5em 1fr;gap:10px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.summary span:first-child{font-family:var(--sans);font-weight:800;color:var(--green);text-transform:uppercase;font-size:.85em;letter-spacing:.04em}
+.summary span:last-child{font-weight:600}
+.end{text-align:center;color:var(--muted);font-family:var(--sans);font-size:14px;margin-top:48px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="tools">
+    <button id="minus" aria-label="Diminuir letra">A−</button>
+    <button id="plus" aria-label="Aumentar letra">A+</button>
+    <button id="wake">Tela acesa</button>
+    <button id="tbtn">Iniciar</button>
+    <span id="timer">00:00</span>
+  </div>
+  <nav class="nav" aria-label="Seções">
+    <a href="#intro">Introdução</a><a href="#p1">1. Semear</a><a href="#p2">2. Desapego</a><a href="#p3">3. Confiança</a><a href="#cristo">Cristo</a><a href="#fim">Conclusão</a>
+  </nav>
+</div>
+
+<main>
+  <header class="top">
+    <span class="eyebrow">Sermão · IPM</span>
+    <h1>Semeando o Bem e Descansando no Senhor</h1>
+    <span class="base">Texto base: Gálatas 6:7-10 · Apoio: Provérbios 3:5-6</span>
+  </header>
+
+  <section id="leitura">
+    <h2><small>Leitura</small>Gálatas 6:7-10</h2>
+    <div class="verse"><b>Gálatas 6:9</b><i>"E não nos cansemos de fazer o bem, pois no tempo próprio colheremos, se não desanimarmos."</i></div>
+    <div class="verse"><b>Provérbios 3:5-6</b><i>"Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento. Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas."</i></div>
+    <p><strong>Objetivo:</strong> nossa responsabilidade é <mark>semear amor e bondade</mark>; nossa segurança está <mark>em Deus, não nos resultados</mark>.</p>
+  </section>
+
+  <section id="intro">
+    <h2><small>Introdução</small>A vida cristã é um campo de plantio</h2>
+    <div class="impact">A vida cristã não tem botão de resultado imediato. É um campo de plantio.</div>
+    <p>Muitas vezes nos frustramos porque fazemos o bem e <strong>não recebemos o "obrigado"</strong> ou a retribuição que esperávamos.</p>
+    <p>E quando isso acontece, a tentação é <mark>parar de semear</mark>.</p>
+    <p><span class="key">Transição:</span> a Palavra nos mostra duas coisas que andam juntas: <mark>AÇÃO</mark> (plantar) e <mark>CONFIANÇA</mark> (esperar em Deus).</p>
+    <div class="impact">Quem planta e confia no Senhor não desanima.</div>
+    <p><span class="key">Contexto de Gálatas:</span> Paulo fala de semear <strong>"para o Espírito"</strong> (Gálatas 6:8), de uma colheita que vem <strong>"no tempo próprio"</strong> (Gálatas 6:9) e de fazer o bem a todos, <strong>"principalmente aos da família da fé"</strong> (Gálatas 6:10).</p>
+  </section>
+
+  <section id="p1">
+    <h2><small>Ponto 1 · A ação</small>O chamado para semear bondade e amor</h2>
+    <div class="verse"><b>Eclesiastes 11:6</b><i>"Semeia pela manhã a tua semente..."</i></div>
+    <p>O cristão é chamado à <mark>ação</mark>. Não podemos ser passivos.</p>
+    <div class="impact">Bondade e amor não são só sentimentos. São sementes.</div>
+    <p><span class="key">A raiz:</span> não semeamos para <strong>conquistar</strong> o favor de Deus. Semeamos porque <mark>já fomos alcançados</mark> por Ele.</p>
+    <div class="verse"><b>1 João 4:19</b><i>"Nós amamos porque ele nos amou primeiro."</i></div>
+    <div class="verse"><b>Gálatas 5:22-23</b><i>"Mas o fruto do Espírito é: amor, alegria, paz, longanimidade, benignidade, bondade, fidelidade, mansidão, domínio próprio."</i></div>
+    <p>Bondade é <mark>fruto do Espírito</mark> (Gálatas 5:22), não esforço moral. <strong>Isso não é autoajuda: é graça produzindo fruto.</strong></p>
+    <span class="cue">Fé e obras</span>
+    <div class="verse"><b>Efésios 2:8-9</b><i>"Porque pela graça sois salvos, mediante a fé; e isto não vem de vós; é dom de Deus; não de obras, para que ninguém se glorie."</i></div>
+    <p>Somos salvos <mark>somente pela graça</mark>, <mark>somente pela fé</mark>. Nenhuma semente que plantamos compra a nossa salvação.</p>
+    <p>Mas Paulo não para no verso 9. O verso 10 diz para que fomos salvos:</p>
+    <div class="verse"><b>Efésios 2:10</b><i>"Pois somos feitura dele, criados em Cristo Jesus para boas obras, as quais Deus de antemão preparou para que andássemos nelas."</i></div>
+    <div class="impact">Não somos salvos pelas obras. Somos salvos para as obras.</div>
+    <p>A fé verdadeira <strong>nunca fica sozinha</strong>. Ela aparece.</p>
+    <div class="verse"><b>Tiago 2:17-18</b>A fé sem obras é morta. <i>"Eu, com as obras, te mostrarei a minha fé."</i></div>
+    <p>As obras não são a <strong>raiz</strong> da salvação. São o <mark>fruto</mark> dela. A árvore não dá fruto para virar árvore; dá fruto porque já é árvore.</p>
+    <p><span class="key">Testemunho de todo dia, em três frentes:</span></p>
+    <ul class="trio">
+      <li><strong>Pensamentos</strong> → <mark>o que ocupa a mente</mark> (Filipenses 4:8).</li>
+      <li><strong>Palavras</strong> → <mark>o que sai da boca</mark> (Colossenses 4:6).</li>
+      <li><strong>Atos</strong> → <mark>o que fazemos quando ninguém agradece</mark> (Colossenses 3:17).</li>
+    </ul>
+    <div class="verse"><b>Filipenses 4:8</b><i>"Tudo o que é verdadeiro, tudo o que é respeitável, tudo o que é justo, tudo o que é puro... seja isso o que ocupe o vosso pensamento."</i></div>
+    <div class="verse"><b>Colossenses 4:6</b><i>"A vossa palavra seja sempre agradável, temperada com sal..."</i></div>
+    <div class="verse"><b>Colossenses 3:17</b><i>"E tudo o que fizerdes, seja em palavra, seja em ação, fazei-o em nome do Senhor Jesus, dando por ele graças a Deus Pai."</i></div>
+    <div class="verse"><b>Mateus 5:16</b><i>"Assim brilhe também a vossa luz diante dos homens, para que vejam as vossas boas obras e glorifiquem a vosso Pai que está nos céus."</i></div>
+    <div class="impact">A glória não é nossa. As pessoas veem o fruto e glorificam o Pai.</div>
+    <span class="cue">Aplicação</span>
+    <ul>
+      <li>Onde Deus te colocou hoje? <strong>Família, trabalho, igreja.</strong></li>
+      <li><mark>Pare de esperar condições perfeitas.</mark> O seu papel é plantar, por onde quer que você passe.</li>
+      <li>Comece pela <strong>família da fé</strong> (Gálatas 6:10): quem aqui, nesta igreja, precisa da sua semente?</li>
+    </ul>
+  </section>
+
+  <section id="p2">
+    <h2><small>Ponto 2 · O desapego</small>A liberdade de não esperar nada em troca</h2>
+    <div class="verse"><b>Lucas 17:10</b><i>"Somos servos inúteis, porque fizemos apenas o que devíamos fazer."</i></div>
+    <div class="verse"><b>Mateus 5:44-45</b>Amar os inimigos, porque o Pai faz nascer o sol sobre maus e bons e chover sobre justos e injustos.</div>
+    <p><span class="key">O perigo da expectativa:</span> quando fazemos o bem esperando gratidão,</p>
+    <div class="impact">transformamos a bondade em comércio.</div>
+    <p>Se a pessoa não agradece, ficamos <strong>magoados</strong>.</p>
+    <p>Maturidade cristã é <mark>ajudar e passar adiante</mark>. Faça o bem porque essa é sua <strong>nova natureza em Cristo</strong>, não porque o outro merece.</p>
+    <p><span class="key">Equilíbrio:</span> não se preocupar com resultados <strong>não é indiferença</strong>. Nós oramos pelo fruto. A diferença é entre <mark>a nossa parte</mark> e <mark>a parte de Deus</mark>.</p>
+    <div class="verse"><b>1 Coríntios 3:6</b><i>"Eu plantei, Apolo regou; mas o crescimento veio de Deus."</i></div>
+    <div class="impact">Eu planto. Deus faz crescer.</div>
+    <p><span class="key">O solo:</span> cada pessoa recebe de um jeito. Sua função <strong>não é forçar o solo</strong>, é <mark>lançar a boa semente</mark>.</p>
+  </section>
+
+  <section id="p3">
+    <h2><small>Ponto 3 · A âncora</small>A base de tudo: confiança no Senhor</h2>
+    <div class="postit"><b>Frase central</b>"A minha confiança está no Senhor"</div>
+    <div class="verse"><b>Salmos 31:14</b><i>"Quanto a mim, confio em ti, Senhor. Eu disse: Tu és o meu Deus."</i></div>
+    <div class="verse"><b>Salmos 37:5</b><i>"Entrega o teu caminho ao Senhor, confia nele, e o mais ele fará."</i></div>
+    <p>Como continuar plantando sem se aborrecer quando não vemos resultado? A resposta não está na <strong>força de vontade</strong>, mas <mark>em quem confiamos</mark>.</p>
+    <ul class="trio">
+      <li>Confiança nas <strong>pessoas</strong> → <mark>decepção</mark>.</li>
+      <li>Confiança nos <strong>resultados</strong> → <mark>ansiedade</mark>.</li>
+      <li>Confiança no <strong>Senhor</strong> → <mark>paz para plantar</mark>.</li>
+    </ul>
+    <p><span class="key">O tempo de Deus:</span> o lavrador <strong>espera com paciência</strong> o precioso fruto da terra (Tiago 5:7-8).</p>
+    <div class="verse"><b>Tiago 5:7</b><i>"Eis que o lavrador aguarda com paciência o precioso fruto da terra..."</i></div>
+    <div class="verse"><b>Hebreus 6:10</b><i>"Deus não é injusto para ficar esquecido do vosso trabalho e do amor que evidenciastes..."</i></div>
+    <div class="impact">Nenhum ato de amor é esquecido por Deus.</div>
+  </section>
+
+  <section id="cristo">
+    <h2><small>Clímax</small>Cristo, o Semeador que não recebeu gratidão</h2>
+    <div class="verse"><b>João 1:11</b><i>"Veio para o que era seu, e os seus não o receberam."</i></div>
+    <p>Jesus curou <strong>dez leprosos</strong>, e <mark>só um voltou</mark> para agradecer (Lucas 17:11-19).</p>
+    <div class="verse"><b>Lucas 17:17</b><i>"Não eram dez os que foram curados? Onde estão os nove?"</i></div>
+    <p>Mesmo assim, <strong>Ele não parou de semear</strong>. Foi até a cruz <mark>confiando no Pai</mark>.</p>
+    <div class="verse"><b>1 Pedro 2:23</b>Quando ultrajado, não revidava; quando sofria, não ameaçava, <i>"mas entregava-se àquele que julga retamente."</i></div>
+    <p>Cristo semeou <strong>sem esperar retorno</strong> e <strong>descansou no Pai</strong>.</p>
+    <div class="impact">E a colheita dele somos nós.</div>
+  </section>
+
+  <section id="fim">
+    <h2><small>Conclusão</small>Plante, descanse, espere</h2>
+    <div class="summary">
+      <div><span>Graça</span><span>Salvos pela fé, para as boas obras.</span></div>
+      <div><span>Ação</span><span>Plante sempre: pensamentos, palavras e atos.</span></div>
+      <div><span>Desapego</span><span>Não se aborreça com a ingratidão.</span></div>
+      <div><span>Paciência</span><span>Aguarde o tempo de Deus.</span></div>
+      <div><span>Fé</span><span>"A minha confiança está no Senhor."</span></div>
+    </div>
+    <span class="cue">Desafio da semana</span>
+    <p>Pense em <mark>uma pessoa ou área</mark> em que você desistiu de semear porque não teve retorno.</p>
+    <p>Escreva num papel: <strong>"A minha confiança está no Senhor"</strong>. Deixe onde você vai ver todo dia e <mark>volte a fazer o bem ali</mark>. Não por ela, mas <strong>em obediência a Deus</strong>.</p>
+    <span class="cue">Oração final</span>
+    <p>Pedir a Deus um <mark>coração de semeador</mark>, que não se cansa, e uma mente que <mark>descansa</mark> na certeza de que Ele governa todas as coisas.</p>
+  </section>
+
+  <p class="end">Soli Deo Gloria</p>
+</main>
+
+<script>
+(function(){
+  var root=document.documentElement, size=20;
+  try{var s=localStorage.getItem('fs'); if(s) size=+s;}catch(e){}
+  function apply(){root.style.setProperty('--fs',size+'px');try{localStorage.setItem('fs',size)}catch(e){}}
+  apply();
+  document.getElementById('plus').onclick=function(){size=Math.min(34,size+2);apply()};
+  document.getElementById('minus').onclick=function(){size=Math.max(14,size-2);apply()};
+
+  var wakeBtn=document.getElementById('wake'), lock=null;
+  async function getLock(){try{lock=await navigator.wakeLock.request('screen');wakeBtn.classList.add('on');
+    lock.addEventListener('release',function(){wakeBtn.classList.remove('on')});}catch(e){wakeBtn.textContent='Indisponível'}}
+  wakeBtn.onclick=function(){if(lock){lock.release();lock=null}else getLock()};
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&wakeBtn.classList.contains('on')&&!lock)getLock()});
+
+  var t=0, run=null, el=document.getElementById('timer'), b=document.getElementById('tbtn');
+  function show(){var m=Math.floor(t/60), s=t%60; el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s}
+  b.onclick=function(){
+    if(run){clearInterval(run);run=null;b.textContent='Continuar';b.classList.remove('on')}
+    else{run=setInterval(function(){t++;show()},1000);b.textContent='Pausar';b.classList.add('on')}
+  };
+  el.ondblclick=function(){t=0;show()};
+})();
+</script>
+
+</body>
+</html>
